@@ -1,0 +1,16 @@
+[user]
+  email = slime7@foxmail.com
+  name = slime7
+
+
+[gui]
+  encoding = utf-8
+[i18n]
+  commitencoding = utf-8
+[svn]
+  pathnameencoding = utf-8
+[core]
+  autocrlf = input
+
+[includeIf "gitdir/i:D:/private/"]
+    path = .gitconfig-private
