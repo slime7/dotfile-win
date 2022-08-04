@@ -1,0 +1,60 @@
+{
+  "profiles": [
+    {
+      "name": "Ubuntu Profile",
+      "colorScheme": "Ubuntu"
+    },
+    {
+      "name": "MaterialDesignColors Profile",
+      "colorScheme": "MaterialDesignColors"
+    }
+  ],
+  "schemes": [
+    {
+      "name": "Ubuntu",
+      "black": "#2e3436",
+      "red": "#cc0000",
+      "green": "#4e9a06",
+      "yellow": "#c4a000",
+      "blue": "#3465a4",
+      "purple": "#75507b",
+      "cyan": "#06989a",
+      "white": "#d3d7cf",
+      "brightBlack": "#555753",
+      "brightRed": "#ef2929",
+      "brightGreen": "#8ae234",
+      "brightYellow": "#fce94f",
+      "brightBlue": "#729fcf",
+      "brightPurple": "#ad7fa8",
+      "brightCyan": "#34e2e2",
+      "brightWhite": "#eeeeec",
+      "background": "#300a24",
+      "foreground": "#eeeeec",
+      "selectionBackground": "#b5d5ff",
+      "cursorColor": "#bbbbbb"
+    },
+    {
+      "name": "MaterialDesignColors",
+      "black": "#435b67",
+      "red": "#fc3841",
+      "green": "#5cf19e",
+      "yellow": "#fed032",
+      "blue": "#37b6ff",
+      "purple": "#fc226e",
+      "cyan": "#59ffd1",
+      "white": "#ffffff",
+      "brightBlack": "#a1b0b8",
+      "brightRed": "#fc746d",
+      "brightGreen": "#adf7be",
+      "brightYellow": "#fee16c",
+      "brightBlue": "#70cfff",
+      "brightPurple": "#fc669b",
+      "brightCyan": "#9affe6",
+      "brightWhite": "#ffffff",
+      "background": "#1d262a",
+      "foreground": "#e7ebed",
+      "selectionBackground": "#4e6a78",
+      "cursorColor": "#eaeaea"
+    }
+  ]
+}
