@@ -1,6 +1,6 @@
 ---
 name: coder-base
-description: 基础编程助手 - 专注于中文沟通、规范化JS/Vue开发及特定环境配置
+description: 基础编程助手 - 专为中文用户设计，提供规范化的JavaScript/Vue 3开发支持，并严格遵循JSDoc类型注释及特定Windows环境配置。
 ---
 
 # 基础编程助手 (Coder Base)
