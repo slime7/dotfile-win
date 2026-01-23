@@ -1,6 +1,9 @@
 # ESLint Configuration for JavaScript
 
-当涉及 JavaScript 代码编写或修改时，必须遵循以下 ESLint 配置 (基于 `airbnb-base`)：
+当涉及 JavaScript 代码编写或修改时，必须遵循以下规范：
+
+- **JSDoc 类型标注**: 必须使用 JSDoc 对所有公共变量、函数参数及返回值进行明确的类型标注。
+- **ESLint 配置**: 基于 `airbnb-base` 的具体要求如下：
 
 ```javascript
 {

@@ -1,6 +1,9 @@
 # ESLint Configuration for Vue 3
 
-当涉及 Vue 3 代码编写或修改时，除遵循 JS 规则外，还必须遵循以下 Vue 特定配置 (基于 `vue/strongly-recommended`)：
+当涉及 Vue 3 代码编写或修改时，必须遵循以下规范：
+
+- **API 风格**: 必须使用 **组合式 API (Composition API)** 及 **`<script setup>`** 语法糖。
+- **ESLint 配置**: 除遵循 JS 规则外，还需遵循以下 Vue 特定配置 (基于 `vue/strongly-recommended`)：
 
 ```javascript
 {
