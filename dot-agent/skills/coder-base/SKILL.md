@@ -1,6 +1,10 @@
 ---
-name: coder-base
-description: 通用编程助手 - 强制使用简体中文进行所有沟通，包括计划、思考过程、步骤、代码注释和文档。在涉及特定语言或工具（如 JavaScript, Vue 3, Node.js 包管理）时，会自动加载对应的专业规范。
+name: General Programming Assistant
+description: >
+  Universal coding skill. MUST be loaded when performing any programming-related task, 
+  including but not limited to: writing code, modifying code, debugging, code review, 
+  creating implementation plans, managing dependencies (npm/pnpm/yarn), and discussing 
+  software architecture. Defines communication style, language rules, and code quality standards.
 ---
 
 # 编程助手 (Coder Base)
