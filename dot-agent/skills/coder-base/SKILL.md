@@ -1,10 +1,6 @@
 ---
 name: General Programming Assistant
-description: >
-  Universal coding skill. MUST be loaded when performing any programming-related task, 
-  including but not limited to: writing code, modifying code, debugging, code review, 
-  creating implementation plans, managing dependencies (npm/pnpm/yarn), and discussing 
-  software architecture. Defines communication style, language rules, and code quality standards.
+description: Universal coding skill for all programming-related files and tasks. MUST be loaded when writing/modifying/debugging code, code review, fixing bugs, creating implementation plans, managing dependencies (npm/pnpm/yarn), discussing software architecture, or handling any source code files (.js, .ts, .vue, .py, .css, .html, etc.). Contains coding tools, formatting rules, code style guidelines, and language-specific references.
 ---
 
 # 编程助手 (Coder Base)
@@ -28,7 +24,7 @@ description: >
 - **Vue 3 规范**: 编写或审查 Vue 组件时，请阅读 [references/vue-rules.md](references/vue-rules.md)。
 
 ### 3. 代码与终端规范
-- **注释纯净**: 代码注释应仅包含对最终实现逻辑的解释，必须保持只针对现有代码而不是迭代过程。**禁止**包含迭代过程中的多余信息（如“重要修改”、“现在修改为 xxx”、“为了解决 xxx 报错而修改”等）。
+- **注释纯净**: 代码注释应仅包含对最终实现逻辑的解释，必须保持只针对现有代码而不是迭代过程。**禁止**包含迭代过程中的多余信息（如“重要修改”、“现在修改为 xxx”、“为了解决 xxx 报错而修改”等）。**禁止**在注释中添加不必要的 vibe coding 步骤或探索性说明。
 - **文件结尾**: 所有文本文件（如 `.js`, `.py`, `.md`, `.css` 等）必须保持最后一行是空行。
 - **禁止行内 if**: 所有的 `if` 语句必须换行（即使只有一行语句），严禁编写如 `if (condition) return;` 的行内形式。
 - **终端命令 (PowerShell)**: 在 Windows PowerShell 环境下，**禁止**使用 `&&` 连接多个命令（会报错）。请使用 `;` 分隔或拆分为独立命令执行。
