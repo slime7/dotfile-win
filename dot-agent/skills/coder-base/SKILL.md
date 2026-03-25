@@ -1,5 +1,5 @@
 ---
-name: General Programming Assistant
+name: coder-base
 description: Universal coding skill for all programming-related files and tasks. MUST be loaded when writing/modifying/debugging code, code review, fixing bugs, creating implementation plans, managing dependencies (npm/pnpm/yarn), discussing software architecture, or handling any source code files (.js, .ts, .vue, .py, .css, .html, etc.). Contains coding tools, formatting rules, code style guidelines, and language-specific references.
 ---
 
@@ -21,6 +21,7 @@ description: Universal coding skill for all programming-related files and tasks.
 
 - **Node.js 包管理 (pnpm)**：处理依赖或包操作时阅读 [references/package-manager.md](references/package-manager.md)。
 - **JavaScript 规范**：编写或审查 JS 代码（含 JSDoc）时阅读 [references/js-rules.md](references/js-rules.md)。
+- **CSS/Stylelint 规范**：编写或审查 CSS/Less/Sass 代码时阅读 [references/css-rules.md](references/css-rules.md)。
 - **Vue 3 规范**：编写或审查 Vue 组件时阅读 [references/vue-rules.md](references/vue-rules.md)。
 
 ## 代码规范
