@@ -2,6 +2,17 @@
 
 本参考定义默认文档的职责、边界与建议结构。根据项目规模压缩章节，但不要改变每份文档的核心职责。
 
+## 目录
+
+- 基本原则
+- `AGENTS.md`
+- `docs/VISION.md`
+- `docs/ARCHITECTURE.md`
+- `docs/ABSTRACTIONS.md`
+- `docs/GETTING-STARTED.md`
+- `docs/adr/README.md`
+- 兼容入口
+
 ## 基本原则
 
 - `AGENTS.md` 保存可执行的工作规则，不承担完整架构说明。
@@ -160,6 +171,16 @@
 ```
 
 文档采用中文时，可以将章节标题翻译为“背景”“决策”“考虑的方案”“影响”，但同一项目内保持一致。
+
+### 固定脚本
+
+使用技能 `scripts/` 中的固定入口，不要在每次任务中重新设计 ADR 脚本：
+
+- Windows PowerShell 使用 `python` 直接运行 `create_adr.py` 与 `validate_agent_docs.py`。
+- Bash 使用 `python3` 直接运行相同脚本。
+- 两种终端共用同一实现，确保编号、模板和校验结果一致。
+
+创建脚本自动选择下一个四位编号，拒绝覆盖文件，并要求提供背景、决策、至少一个候选方案和至少一个影响。验证脚本检查核心文档、UTF-8、占位符、本地链接和 ADR 结构。脚本的完整调用格式以 `SKILL.md` 为准。
 
 ## 兼容入口
 
