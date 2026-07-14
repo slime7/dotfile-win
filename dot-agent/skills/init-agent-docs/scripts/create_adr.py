@@ -52,15 +52,48 @@ def single_line_non_empty(value: str) -> str:
     return normalized
 
 
+def project_relative_path(value: str) -> Path:
+    normalized = value.strip()
+    path = Path(normalized)
+    looks_like_windows_absolute = re.match(r"^[a-zA-Z]:[\\/]", normalized)
+    if not normalized:
+        raise argparse.ArgumentTypeError("path must not be empty")
+    if (
+        path.is_absolute()
+        or looks_like_windows_absolute
+        or normalized.startswith("\\\\")
+    ):
+        raise argparse.ArgumentTypeError("path must be relative to the project root")
+    if ".." in path.parts:
+        raise argparse.ArgumentTypeError("path must not leave the project root")
+    return path
+
+
+def resolve_project_path(project_root: Path, relative_path: Path) -> Path:
+    resolved_root = project_root.resolve()
+    resolved_path = (resolved_root / relative_path).resolve()
+    try:
+        resolved_path.relative_to(resolved_root)
+    except ValueError as error:
+        raise ValueError(f"path leaves the project root: {relative_path}") from error
+    return resolved_path
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Create the next numbered ADR in a project's docs/adr directory."
+        description="Create the next numbered ADR in a project-relative directory."
     )
     parser.add_argument("project_root", type=Path, help="Path to the project root")
     parser.add_argument(
         "title", type=single_line_non_empty, help="Human-readable decision title"
     )
     parser.add_argument("--slug", help="Lowercase ASCII filename slug")
+    parser.add_argument(
+        "--adr-dir",
+        type=project_relative_path,
+        default=Path("docs/adr"),
+        help="ADR directory relative to the project root (default: docs/adr)",
+    )
     parser.add_argument(
         "--language", choices=("auto", "zh", "en"), default="auto"
     )
@@ -165,7 +198,9 @@ def render_adr(args: argparse.Namespace, number: int, language: str) -> str:
 
 def create_adr(args: argparse.Namespace) -> Path | None:
     project_root = args.project_root.expanduser().resolve()
-    adr_directory = project_root / "docs/adr"
+    if not project_root.is_dir():
+        raise ValueError(f"project root is not a directory: {project_root}")
+    adr_directory = resolve_project_path(project_root, args.adr_dir)
     readme_path = adr_directory / "README.md"
     if not readme_path.is_file():
         raise ValueError(f"ADR guide is missing: {readme_path}")
