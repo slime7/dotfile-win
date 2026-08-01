@@ -21,6 +21,7 @@ description: 指导 Web 前端使用 flex 或 grid 编写布局。需要在实�
 - 使用 flex 时，为不需要弹性的元素设置 `flex-shrink: 0;`；使用 Tailwind 时使用 `shrink-0`。
 - 一行 flex 中不要同时放入过多弹性元素，尤其是移动端或较窄页面。
 - 只有在需要平分空间或按比例分配空间时，才让多个元素同时保持弹性。
+- 对于不参与平分或按比例分配空间的 flex 子元素，禁止使用 `flex: auto`，也禁止使用 Tailwind 的 `flex-1`、`flex-auto`；需要占用剩余空间时，使用 `flex-grow`，Tailwind 中使用 `grow`。
 - 文本、输入框、列表内容等可变区域通常是适合弹性伸缩的元素；图标、头像、固定宽按钮、标签、操作区通常不应被压缩。
 
 ## Flex 对齐与居中
@@ -52,6 +53,7 @@ description: 指导 Web 前端使用 flex 或 grid 编写布局。需要在实�
 
 - 是否已经说明每个横向子元素谁可以伸缩、谁不可以伸缩？
 - 不应压缩的 flex 子元素是否设置了 `flex-shrink: 0;` 或 `shrink-0`？
+- 非平分或非按比例分配空间的 flex 子元素是否避免了 `flex: auto`、`flex-1` 和 `flex-auto`，并改用 `flex-grow` 或 `grow`？
 - 单行或单列布局是否优先用了 flex？
 - 多个同级子元素的间距是否优先用了 `gap`？
 - 末端对齐是否保留了 `justify-start`，并通过 `flex-grow: 1;` 占位元素实现？
