@@ -68,6 +68,7 @@ description: 为新项目、脚手架生成但尚未实质开发的项目，或�
 - `docs/ABSTRACTIONS.md`
 - `docs/GETTING-STARTED.md`
 - `docs/adr/README.md`
+- `scripts/create_adr.py`（建立 ADR 体系时，从技能 `scripts/create_adr.py` 复制）
 
 遵循以下规则：
 
@@ -79,13 +80,14 @@ description: 为新项目、脚手架生成但尚未实质开发的项目，或�
 - 沿用项目现有文档语言；没有既有约定时使用用户沟通语言，保留必要的英文技术名词。
 - 仅在检测到相应工具、已有兼容文件或用户明确要求时创建 `CLAUDE.md` 或 `GEMINI.md`。兼容入口只指向本次采用的实际 agent 入口，不要复制共享规则。
 - 默认只建立 ADR 体系，不追写历史决策。只有决策内容及其原因都有明确证据时才创建历史 ADR。
+- 建立 ADR 体系时，把技能 `scripts/create_adr.py` 复制到项目 `scripts/create_adr.py`，并在 `docs/adr/README.md` 中说明其用法。项目已有同名脚本时：内容一致则沿用；不一致则保留项目版本、不覆盖，在 `docs/adr/README.md` 和完成报告中记录实际脚本路径。
 - 使用 UTF-8 编码，并保持文本文件末尾有空行。
 
-### 6. 使用固定脚本创建 ADR
+### 6. 使用项目内脚本创建 ADR
 
-不要临时编写 ADR 编号、命名或模板脚本。先确定背景、决策、候选方案和影响，再根据终端调用技能自带 Python 脚本。
+不要临时编写 ADR 编号、命名或模板逻辑。初始化时已把技能 `scripts/create_adr.py` 复制到项目（默认 `scripts/create_adr.py`）；从项目根目录调用第 5 步记录的脚本路径。若项目内脚本缺失或不是技能版本，先按第 5 步复制，再运行。
 
-脚本需要 Python 3.10 或更高版本。
+脚本需要 Python 3.10 或更高版本。项目内 `docs/adr/README.md` 记录了相同用法，供项目成员和后续 agent 查阅。
 
 PowerShell：
 
@@ -132,6 +134,7 @@ python3 scripts/validate_agent_docs.py <project-root> --adr-dir <adr-directory>
 - 项目被判定为何种状态及主要依据。
 - 创建和更新了哪些文档。
 - 保留或合并了哪些既有规则。
+- ADR 创建脚本的放置位置与同步情况（新复制、沿用项目已有版本或保留差异）。
 - 校验结果和仍待确认的事项。
 
 不要把任务标记为完成，除非核心文档齐全、校验通过，或已明确说明无法完成的阻塞原因。
