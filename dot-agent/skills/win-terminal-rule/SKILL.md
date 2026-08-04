@@ -20,6 +20,9 @@ description: 适用于 Windows 和非 Windows 系统的终端使用规则，并�
   - `$env:CLICOLOR_FORCE="0"`
   - `--color=never`
   - `--no-color`
+- 执行 `pnpm`、`npm` 等命令前，先设置颜色环境变量并与命令串联：
+  - `$env:NO_COLOR='1'; $env:CLICOLOR='0'; pnpm install`
+- pnpm 使用 `--reporter=append-only` 强制纯文本输出：`pnpm install --reporter=append-only`。
 
 ### 及时删除临时文件
 
@@ -78,4 +81,55 @@ description: 适用于 Windows 和非 Windows 系统的终端使用规则，并�
 ### 文件编码
 
 - 读写文件时默认使用 `utf-8`，避免因为 PowerShell 默认编码不一致而出现乱码或内容损坏。
-- 使用 `Get-Content`、`Set-Content`、`Add-Content`、`Out-File` 等命令时，合适的情况下显式指定 `-Encoding utf8`。
+- PowerShell 5.1 中 `Set-Content`、`Out-File` 默认写 UTF-16LE，`Get-Content` 默认按系统 ANSI 读取，读写文本文件必须显式指定 `-Encoding utf8`。
+- 使用 `Get-Content`、`Set-Content`、`Add-Content`、`Out-File` 等命令时，一律显式指定 `-Encoding utf8`。
+
+### Agent 工具调用（shell_command）注意事项
+
+在 Codex 等 Agent 的 `shell_command` 工具中执行 PowerShell 时，命令会经过工具包装层；以下问题均已在 Windows PowerShell 5.1 + 工具包装层的真实会话中复现。
+
+#### 引号混用会被包装层破坏
+
+- 现象：单条命令同时出现单引号和双引号（如 `('vuetify_check_' + ...)`、正则字符类 `[^'"]`）时，包装层会把内层引号改写成 `'"'` 序列，导致命令被拒（"blocked by policy"）或 ParserError。
+- 规则：
+  - 单条命令只使用一种引号风格；需要字面双引号字符时用 `[char]34` 拼接。
+  - 单引号字符串内嵌单引号时双写：`'it''s'`。
+  - 正则表达式避免包含引号的字符类。
+
+#### Windows 路径的反斜杠会被转义破坏
+
+- 现象：`-WorkingDirectory "C:\work\demo\packages\app"` 被改写为 `C:'\\work\\demo...`，整个命令随后被拒。
+- 规则：命令参数中的路径一律使用正斜杠（如 `C:/work/demo/packages/app`），PowerShell 原生支持正斜杠；避免在复杂命令中书写反斜杠路径。
+
+#### Windows PowerShell 5.1 不兼容 PS7 语法
+
+- 现象：`??` 空合并运算符、三元表达式、`&&` 直接报 ParserError。
+- 规则：脚本开头先确认版本（`$PSVersionTable`），只写 5.1 兼容语法；判空用 `if ($x -eq $null)`，命令串联用 `;`。
+
+#### 后台启动与递归删除会被工具策略拒绝
+
+- 现象：`Start-Process`（带 `-RedirectStandardOutput`、`-WindowStyle Hidden`）、`npm pack` 后 `tar` 解包再对计算出的临时路径执行 `Remove-Item -Recurse -Force`，均被工具策略拒绝。
+- 规则：
+  - 短时后台探测优先用 `Start-Job` / `Stop-Job` / `Remove-Job`，不要用 `Start-Process`。
+  - 递归删除前先解析并校验目标绝对路径，只对已验证的字面路径用 `-LiteralPath` 执行。
+  - 能只读抓取（`Invoke-WebRequest` / `Invoke-RestMethod`）就不落盘。
+
+#### 超时杀进程会残留子进程占用端口
+
+- 现象：vite dev server 超时被杀后，node 子进程仍占用 5173/5174。
+- 规则：任务结束主动检查监听端口（`Get-NetTCPConnection -State Listen`）与进程树（`Get-CimInstance Win32_Process` 按 `ParentProcessId` 递归）；按 PID 精确清理，禁止按进程名批量杀（`node.exe` 是多个项目共享的公共进程）。
+
+#### rg 的路径参数不做 shell 通配展开
+
+- 现象：`rg xxx packages/*/package.json` 在 Windows 上报"文件名、目录名或卷标语法不正确"（os error 123）。
+- 规则：不要依赖 `*` 展开路径，改用 rg 原生过滤：`rg xxx packages -g 'package.json' -g '!node_modules'`。
+
+#### 字符串提取避免复杂正则
+
+- 现象：`"(/[^'""]*vue...)"` 这类双引号内嵌引号序列会导致字符串提前截断。
+- 规则：从响应文本提取 URL 等片段时，优先用 `IndexOf` + `Substring`，或单引号正则配合 `''` 双写；引号字符用 `[char]34` 比较。
+
+#### 模拟端口占用时先验证占位进程
+
+- 现象：`Start-Job` 内再起 `Start-Job` 的 dummy listener 未真正占住端口，被测服务仍绑定原端口。
+- 规则：先探测占位进程确实在监听，再启动被测服务；测试端口漂移时直接用 `--port` + `--strictPort` 指定目标端口更可靠。
