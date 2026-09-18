@@ -1,6 +1,6 @@
 ---
 name: coder-base
-description: Universal coding skill for all programming-related files and tasks. MUST be loaded when writing/modifying/debugging code, code review, fixing bugs, creating implementation plans, managing dependencies (npm/pnpm/yarn), discussing software architecture, or handling any source code files (.js, .ts, .vue, .py, .css, .html, etc.). Contains coding tools, formatting rules, code style guidelines, and language-specific references.
+description: Universal coding skill for all programming-related files and tasks. MUST be loaded when writing/modifying/debugging code, code review, fixing bugs, creating implementation plans, managing dependencies (pnpm/uv/npm/yarn), discussing software architecture, or handling any source code files (.js, .ts, .vue, .py, .css, .html, etc.). Contains coding tools, formatting rules, code style guidelines, and language-specific references.
 ---
 
 # 编程助手 (Coder Base)
@@ -19,7 +19,7 @@ description: Universal coding skill for all programming-related files and tasks.
 
 具体的编程语言或工具规范仅在相关上下文触发时按需加载：
 
-- **Node.js 包管理 (pnpm)**：处理依赖或包操作时阅读 [references/package-manager.md](references/package-manager.md)。
+- **包管理（nodejs、python等）**：处理依赖或包操作时阅读 [references/package-manager.md](references/package-manager.md)。
 - **JavaScript 规范**：编写或审查 JS 代码（含 JSDoc）时阅读 [references/js-rules.md](references/js-rules.md)。
 - **CSS/Stylelint 规范**：编写或审查 CSS/Less/Sass 代码时阅读 [references/css-rules.md](references/css-rules.md)。
 - **Vue 3 规范**：编写或审查 Vue 组件时阅读 [references/vue-rules.md](references/vue-rules.md)。
@@ -42,7 +42,7 @@ description: Universal coding skill for all programming-related files and tasks.
 - **分支命名**：
   - 当前不在 `feature/` 下 → 创建 `feature/功能名称`。
   - 当前已在 `feature/parent` 下 → 创建 `feature/parent.sub-feature`。
-- **持续提交**：每完成阶段性开发后执行 `git commit`，附带清晰的提交说明。
+- **持续提交**：每完成阶段性开发后执行 `git commit`。
 
 ## 工作流
 
