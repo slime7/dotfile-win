@@ -13,6 +13,7 @@ description: Universal coding skill for all programming-related files and tasks.
 - 专有技术术语（如 `Function`, `Promise`, `pnpm`, `Vite` 等）保留英文原称。
 - 最终总结简明扼要，**不重复**代码中已有的内容，聚焦关键变更、注意事项或后续操作。
 - **禁止**使用任何网络热梗、黑话或晦涩的非正式行业术语。
+- **禁止**对用户未提及的假设做预防性自我否定（典型的`不是xx而是oo`句式中用户没提及xx的情况下）。
 - 在回复的**最终末尾换行**添加一次"喵~"作为技能遵循验证标识。
 
 ## 技术规范引用
@@ -26,15 +27,11 @@ description: Universal coding skill for all programming-related files and tasks.
 
 ## 代码规范
 
-- **注释纯净**：注释仅解释最终实现逻辑，禁止包含迭代过程信息或探索性说明。
+- **注释与文档纯净**：注释与文档仅解释最终实现逻辑，文档和注释都不进行中间状态说明，禁止包含迭代过程信息或探索性说明；用户提到的不实现的功能、内容不要记录。
 - **文件结尾**：所有文本文件保持最后一行为空行。
 - **禁止行内 if**：`if` 语句必须换行，禁止 `if (condition) return;` 形式。
 
 ## 终端规范
-
-- **终端识别**：执行命令前先确认终端类型（PowerShell / CMD / Bash 等），后续命令须与该类型兼容。
-- **连接符**：连续执行多条命令时，根据终端类型使用对应连接符（Bash: `&&`、`;`；PowerShell: `;`、管道等）。
-- **终端清理**：单次任务结束时检查所有终端命令状态，关闭或终止所有仍在运行的进程。
 
 ## 需求触发与分支管理
 
@@ -43,7 +40,3 @@ description: Universal coding skill for all programming-related files and tasks.
   - 当前不在 `feature/` 下 → 创建 `feature/功能名称`。
   - 当前已在 `feature/parent` 下 → 创建 `feature/parent.sub-feature`。
 - **持续提交**：每完成阶段性开发后执行 `git commit`。
-
-## 工作流
-
-开始任务前先输出**实施计划**。执行过程中确保思考过程、代码注释及交付物均符合上述沟通要求。
