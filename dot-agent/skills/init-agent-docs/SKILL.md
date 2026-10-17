@@ -14,6 +14,8 @@ description: 为新项目、脚手架生成但尚未实质开发的项目，或�
 1. 阅读 [references/project-state.md](references/project-state.md)，判断项目所处状态。
 2. 阅读 [references/document-system.md](references/document-system.md)，确定每份文档的职责和默认结构。
 3. 如果项目已有实质实现或已有同类文档，再阅读 [references/existing-project.md](references/existing-project.md)。
+4. 阅读 [references/agent-workflow-architecture.md](references/agent-workflow-architecture.md) 与 [references/quality-gates-and-tooling.md](references/quality-gates-and-tooling.md)，掌握高效生产级 Agent 工作流模型、分层质量门禁与防碰撞机制。
+5. 阅读 [references/replication-prompt.md](references/replication-prompt.md)，获取端到端复刻 Agent 流程与架构的完整提示词与落地步骤。
 
 ## 工作流
 
@@ -81,6 +83,10 @@ description: 为新项目、脚手架生成但尚未实质开发的项目，或�
 - 仅在检测到相应工具、已有兼容文件或用户明确要求时创建 `CLAUDE.md` 或 `GEMINI.md`。兼容入口只指向本次采用的实际 agent 入口，不要复制共享规则。
 - 默认只建立 ADR 体系，不追写历史决策。只有决策内容及其原因都有明确证据时才创建历史 ADR。
 - 建立 ADR 体系时，把技能 `scripts/create_adr.py` 复制到项目 `scripts/create_adr.py`，并在 `docs/adr/README.md` 中说明其用法。项目已有同名脚本时：内容一致则沿用；不一致则保留项目版本、不覆盖，在 `docs/adr/README.md` 和完成报告中记录实际脚本路径。
+- 将成熟的 Agent 协同机制与工作流复刻到目标项目中（按 [replication-prompt.md](references/replication-prompt.md) 生成）：
+  - 在 `AGENTS.md` 中写入任务状态机（Backlog → Open → To Rework → In Progress → In Review → Done）、声明防碰撞规则、返工优先原则、阻塞三要素上报协议、TDD 流程、分层门禁（Pre-commit 语法校验 + Pre-push 全量防护且禁止 `--no-verify`）、零增量规则与代码健康度防退化机制。
+  - 可参考技能内置资产模板 `assets/templates/AGENTS.template.md` 进行适配裁剪。
+  - 若目标项目需要自动化指令，可从 `assets/commands/` 将常用指令（如 `create-adr.md`, `task-done.md`, `next-task.md`）复制到项目内的对应指令目录（如 `.claude/commands/`），使目标项目具备自闭环运维能力。
 - 使用 UTF-8 编码，并保持文本文件末尾有空行。
 
 ### 6. 使用项目内脚本创建 ADR
